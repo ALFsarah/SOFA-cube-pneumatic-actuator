@@ -6,8 +6,6 @@ from stlib.visuals import ShowGrid
 from stlib.physics.rigid import Floor
 from stlib.scene import ContactHeader
 import os
-#Location of Meshes and objects
-path = 'details/data/mesh/'
 
 def createScene(rootNode):
 	#Its helpful to be able to see the grid
@@ -38,8 +36,8 @@ def createScene(rootNode):
 
 	#Let's add the Child node for the Mesh
 	cube = rootNode.createChild('cube')
-	#Adding the Mesh file and make sure it finds it in the location directed to by the path
-	cube.createObject('MeshVTKLoader', name='loader', filename= path + 'mesh_cube20.vtk')
+	#Adding the Mesh file and make sure it finds it in the location directed to
+	cube.createObject('MeshVTKLoader', name='loader', filename= pa 'mesh_cube20.vtk')
 	#Now let's load the Mehs and make it a MechObj, which stores and is set to show the degrees of freedom of our box
 	cube.createObject('Mesh', src='@loader', name='container')
 	cube.createObject('MechanicalObject', name='tetras', template='Vec3d', showObject='true')	
@@ -83,7 +81,7 @@ def createScene(rootNode):
 
 	#First let's create the cavity add the mesh and load it
 	cavity = cube.createChild('cavity')
-	cavity.createObject('MeshSTLLoader', name='loader', filename= path + 'mesh_cavity20.stl')
+	cavity.createObject('MeshSTLLoader', name='loader', filename='mesh_cavity20.stl')
 	cavity.createObject('Mesh', src='@loader', name='topo')
 	#Now we must make the MechanicalObject of the surface mesh to store the degrees of freedom
 	#along the surface that will cause deformations
@@ -105,7 +103,7 @@ def createScene(rootNode):
 	cavity.createObject('BarycentricMapping', name='mapping')
 
 	#Now as a first test we will use the prewritten controller program which uses +/- to inflate and deflate
-	rootNode.createObject('PythonScriptController', filename='details/oscillationController.py', classname="controller")
+	rootNode.createObject('PythonScriptController', filename='oscillationController.py', classname="controller")
 
 	#Now we will add an animationloop, the easiest is to add the FreeMotionAnimationLoop
 	rootNode.createObject('FreeMotionAnimationLoop')
@@ -115,7 +113,7 @@ def createScene(rootNode):
 
 	#Let's add a visual model for the vube
 	visualCube = cube.createChild('visualCube')
-	visualCube.createObject('MeshSTLLoader', name='loader', filename= path + 'mesh_cube20.stl')
+	visualCube.createObject('MeshSTLLoader', name='loader', filename='mesh_cube20.stl')
 	visualCube.createObject('OglModel', src='@loader', template='ExtVec3d', color='0.4 0.9 0.9')
 	visualCube.createObject('BarycentricMapping')
 
@@ -140,7 +138,7 @@ def createScene(rootNode):
 
 	#First we will load and store the surface mesh of the cube, and turn it into a mechanicalObject
 	#You could think about the translation of this object when wanting to add more cubes but for now it is not necessary
-	collisionCube.createObject('MeshSTLLoader', name='loader', filename= path + 'mesh_cube20.stl')
+	collisionCube.createObject('MeshSTLLoader', name='loader', filename='mesh_cube20.stl')
 	collisionCube.createObject('Mesh', src='@loader', name='topo')
 	collisionCube.createObject('MechanicalObject', name='collisMech')
 
